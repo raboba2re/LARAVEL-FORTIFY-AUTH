@@ -34,7 +34,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
 
             return Limit::perMinute(5)->by($throttleKey);
         });
@@ -49,25 +49,22 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.login');
         });
 
-    Fortify::verifyEmailView(function () {
-        return view('auth.verify-email');
-    });
-    Fortify::confirmPasswordView(function () {
-        return view('auth.password-confirm');
-    });
-    Fortify::twoFactorChallengeView(function () {
-        return view('auth.two-factor');
-    });
-    Fortify::requestPasswordResetLinkView(function () {
-        return view('auth.forgot-password');
-    });
-    Fortify::resetPasswordView(function (Request $request) {
-        return view('auth.reset-password', ['request' => $request]);
-    });
-    Fortify::confirmPasswordView(function () {
-        return view('auth.confirm-password');
-    });
+        Fortify::verifyEmailView(function () {
+            return view('auth.verify-email');
+        });
+        Fortify::confirmPasswordView(function () {
+            return view('auth.password-confirm');
+        });
 
- 
+        Fortify::requestPasswordResetLinkView(function () {
+            return view('auth.forgot-password');
+        });
+        Fortify::resetPasswordView(function (Request $request) {
+            return view('auth.reset-password', ['request' => $request]);
+        });
+
+        Fortify::twoFactorChallengeView(function () {
+            return view('auth.two-factor');
+        });
     }
 }
